@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medic Chatbot</title>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div class="chat-container">
+      <div class="chat-header">
+        <h3>Medic 4.0</h3>
+        <h2>Hi dear patients! Ask your queries.</h2>
+      </div>
+      <div class="chat-body">
+        <div class="chat-history" id="chat-history"></div>
+      </div>
+      <form onsubmit="getResponseFromLLM(); return false;" class="chat-input">
+        <input
+          type="text"
+          name="userQuery"
+          id="userQuery"
+          class="userQuery"
+          placeholder="Type your query here"
+        />
+        <button type="submit" class="send-button">Send</button>
+      </form>
+    </div>
+
+    <script src="./index.js"></script>
+  </body>
+</html>

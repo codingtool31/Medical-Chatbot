@@ -10,24 +10,24 @@ async function getResponseFromLLM() {
         const inputRef = document.querySelector("input.userQuery");
 
         if (qna.length < 5) {
-            const query = inputRef.value.trim(); // Trim whitespace
+            const query = inputRef.value.trim();
 
-            // Input validation
+
             if (!query) {
                 alert("Please enter a query.");
                 return;
             }
 
-            // Clear Input
+
             inputRef.value = "";
 
-            // Add User Query to Chat History
+
             const qDiv = document.createElement("div");
             qDiv.classList.add("user-msg");
             qDiv.innerHTML = `<strong>You:</strong> ${query}`;
             chatHistory.appendChild(qDiv);
 
-            // Show loading indicator
+
             const loadingDiv = document.createElement("div");
             loadingDiv.classList.add("loading");
             chatHistory.appendChild(loadingDiv);
@@ -37,7 +37,7 @@ async function getResponseFromLLM() {
                     {
                         parts: [
                             {
-                                text: `Context: ${JSON.stringify(qna)}`, // Convert Q&A pairs to JSON string
+                                text: `Context: ${JSON.stringify(qna)}`,
                             },
                             {
                                 text: `
@@ -54,7 +54,7 @@ async function getResponseFromLLM() {
             };
 
             const res = await fetch(
-                'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyAn4tDkD5GsrxfH025dhfgiw8COHQRLl6Y',
+                'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=AIzaSyAn4tDkD5GsrxfH025dhfgiw8COHQRLl6Y',
                 {
                     method: "POST",
                     headers: {
@@ -67,22 +67,22 @@ async function getResponseFromLLM() {
             const data = await res.json();
             const responseText = data.candidates[0].content.parts[0].text;
 
-            // Remove loading indicator
+
             loadingDiv.remove();
 
-            // Add Bot Response to Chat History
+
             const newDiv = document.createElement("div");
             newDiv.classList.add("bot-msg");
-            newDiv.innerHTML = `<strong>Doctor:</strong> ${responseText}`;
+            newDiv.innerHTML = `<pre class="AItag"><strong>Doctor:</strong> ${responseText}</pre>`;
             chatHistory.appendChild(newDiv);
 
-            // Pushing to QNA Array
+
             qna.push({
                 Question: query,
                 LLMResponse: responseText,
             });
 
-            // Smoothly scroll the chat history to the bottom
+
             const lastMessage = chatHistory.lastElementChild;
             lastMessage.scrollIntoView({ behavior: "smooth" });
 

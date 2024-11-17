@@ -161,4 +161,12 @@
   .send-button:hover {
     background-color: #004d40; 
   }
-  
+  .AItag{
+    /* width:10%; */
+    /* max-width: 30px;
+    height: 50vh; */
+    overflow: none;
+    white-space: pre;
+    display: flex;
+    flex-direction: column;
+  }

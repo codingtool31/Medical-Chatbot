@@ -1,33 +1,105 @@
 
-<!DOCTYPE html>
+
+
+ <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Medic Chatbot</title>
+
+   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  
     <link rel="stylesheet" href="./index.css" />
-  </head>
-  <body>
+</head>
+<body>
+
+   
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Medic 4.0</a>
+        </div>
+    </nav>
+
+   
     <div class="chat-container">
-      <div class="chat-header">
-        <h3>Medic 4.0</h3>
-        <h2>Hi dear patients! Ask your queries.</h2>
-      </div>
-      <div class="chat-body">
-        <div class="chat-history" id="chat-history"></div>
-      </div>
-      <form onsubmit="getResponseFromLLM(); return false;" class="chat-input">
-        <input
-          type="text"
-          name="userQuery"
-          id="userQuery"
-          class="userQuery"
-          placeholder="Type your query here"
-        />
-        <button type="submit" class="send-button">Send</button>
-      </form>
+        <div class="chat-header">
+            <h3>Medic 4.0</h3>
+            <h2>Hi dear patients! Ask your queries.</h2>
+        </div>
+
+        <div class="chat-body">
+            <div class="chat-history" id="chat-history"></div>
+        </div>
+
+       
+        <form onsubmit="getResponseFromLLM(); return false;" class="chat-input">
+            <input
+                type="text"
+                name="userQuery"
+                id="userQuery"
+                class="userQuery"
+                placeholder="Type your query here"
+            />
+            <button type="submit" class="send-button">Send</button>
+        </form>
     </div>
 
+    
+    <div class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content text-center">
+                <div class="modal-body">
+                    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p>Generating response...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="unrelatedModal" tabindex="-1" aria-labelledby="unrelatedModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="unrelatedModalLabel">Unrelated Question</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    I'm sorry, I cannot answer unrelated questions. Please ask a medical query.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    An error occurred while processing your query. Please try again later.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./index.js"></script>
-  </body>
+
+</body>
 </html>

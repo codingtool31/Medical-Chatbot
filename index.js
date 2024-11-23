@@ -1,23 +1,24 @@
 
 
 
-
 const qna = [];
 
 async function getResponseFromLLM() {
     try {
+
+        const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+        loadingModal.show();
+
         const chatHistory = document.getElementById('chat-history');
         const inputRef = document.querySelector("input.userQuery");
 
-        if (qna.length < 5) {
+        if (qna.length < 10) {
             const query = inputRef.value.trim();
-
 
             if (!query) {
                 alert("Please enter a query.");
                 return;
             }
-
 
             inputRef.value = "";
 
@@ -27,11 +28,6 @@ async function getResponseFromLLM() {
             qDiv.innerHTML = `<strong>You:</strong> ${query}`;
             chatHistory.appendChild(qDiv);
 
-
-            const loadingDiv = document.createElement("div");
-            loadingDiv.classList.add("loading");
-            chatHistory.appendChild(loadingDiv);
-
             const apiBody = {
                 contents: [
                     {
@@ -40,10 +36,7 @@ async function getResponseFromLLM() {
                                 text: `Context: ${JSON.stringify(qna)}`,
                             },
                             {
-                                text: `
-                  You are a medical chatbot which will answer the queries of people and patients, also diagnose their diseases according to the symptoms they tell. 
-                  Be specific in your answer. Lastly, excuse yourself when an irrelevant question is asked.
-                `,
+                                text: `You are a medical chatbot that will answer people's queries and diagnose diseases based on symptoms. Be specific in your answer, and excuse yourself when the question is irrelevant.`,
                             },
                             {
                                 text: `User query: ${query}`,
@@ -52,6 +45,7 @@ async function getResponseFromLLM() {
                     },
                 ],
             };
+
 
             const res = await fetch(
                 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=AIzaSyAn4tDkD5GsrxfH025dhfgiw8COHQRLl6Y',
@@ -68,12 +62,12 @@ async function getResponseFromLLM() {
             const responseText = data.candidates[0].content.parts[0].text;
 
 
-            loadingDiv.remove();
+            loadingModal.hide();
 
 
             const newDiv = document.createElement("div");
             newDiv.classList.add("bot-msg");
-            newDiv.innerHTML = `<pre class="AItag"><strong>Doctor:</strong> ${responseText}</pre>`;
+            newDiv.innerHTML = `<strong>Doctor:</strong> ${responseText}`;
             chatHistory.appendChild(newDiv);
 
 
@@ -85,12 +79,14 @@ async function getResponseFromLLM() {
 
             const lastMessage = chatHistory.lastElementChild;
             lastMessage.scrollIntoView({ behavior: "smooth" });
-
         } else {
             alert("Pay for full access.");
         }
     } catch (err) {
         console.log(err);
+
+        const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+        loadingModal.hide();
         alert("Error while generating response");
     }
 }

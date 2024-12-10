@@ -48,7 +48,7 @@ async function getResponseFromLLM() {
 
 
             const res = await fetch(
-                'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=AIzaSyAn4tDkD5GsrxfH025dhfgiw8COHQRLl6Y',
+                'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=AIzaSyCIAVEOrZGmviplDXlE20pJpS5UrNM52pg',
                 {
                     method: "POST",
                     headers: {
@@ -90,3 +90,4 @@ async function getResponseFromLLM() {
         alert("Error while generating response");
     }
 }
+
